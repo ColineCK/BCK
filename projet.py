@@ -31,12 +31,6 @@ from lazypredict.Supervised import LazyClassifier
 import plotly.graph_objects as go
 
 
-
-
-
-
-
-
 #Données
 nom_fichier = "/home/coline/Documents/Etudes/ISUP/Master2/Semestre1/Visualisation de données/BCK/school-shootings-data.csv"
 
