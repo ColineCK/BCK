@@ -309,8 +309,6 @@ def graph_nuage_mots(variable):
 
 
 
-
-
 def section_Univariee():
     # Ajoutez un widget pour choisir le type de graphique et la variable
     var_choix= st.selectbox('Sélectionnez un regroupement de variables :', ["Typologie de l'attaque", "Géographie","Ecole : identité et organisation", 'Temporalité',"Identité des attaquants"])
@@ -324,169 +322,163 @@ def section_Univariee():
 	    background-color:  #ffcccc;
     """
     
-
-# Afficher le texte fixe avec encadré
-    match var_choix:
-        case "Ecole : identité et organisation":
-            # Texte fixe à afficher
-            texte_fixe = """ Les écoles ciblées semblent de tous grades : primaire, collège, lycée. 
-            Pour autant les écoles dites publiques sont 15 fois plus visées que les écoles privées.
-            Enfin dans trois quarts des écoles ciblées il n'y avait pas de présence de force de protection au moment de l'attaque."""
-            st.markdown(f'<div style="{style_encadre}">{texte_fixe}</div>', unsafe_allow_html=True)
-            
-            col1, col2 = st.columns(2)
-            titre='**Noms des écoles concernées par les fusillades**'
-            col1.markdown(titre)
-            col1.image(graph_nuage_mots("school_name").to_array(), use_column_width=True)
-            
-            titre="**Type d'écoles impliquées dans une fusillade**"
-            col2.markdown(titre)
-            col2.altair_chart(barplot_vert("school_type", 400), use_container_width=True)
-            
-            col1, col2 = st.columns(2)
-                    
-            titre = "**Nombre d'inscrits dans les écoles visées**"
-            col1.markdown(titre)
-            col1.altair_chart(histo("enrollment", 400), use_container_width=True) # changer en boxplot
-            
-            #lunch
-            df["lunch_prop"] = (df['lunch']/df["enrollment"])
-            titre= "**Proportion de boursiers au sein des établissements visés**"
-            col2.markdown(titre)
-            col2.altair_chart(histo("lunch_prop", 400), use_container_width=True) 
-            
-            col1, col2 = st.columns(2)
-            
-            #staffing
-            df["staffing_prop"] = (df['staffing']/df["enrollment"])
-            titre = "**Proportion de professeur par étudiant au sein des établissements visés**"
-            col1.markdown(titre)
-            col1.altair_chart(histo("staffing_prop", 400), use_container_width=True) 
-            
-            #ressource officer
-            titre="**Présence/ abscence d'une force de protection dans les étabilssements visés**"
-            df['ind_officer'] = np.where(df['resource_officer'] > 0, 'Présence', 'Absence')
-            col2.markdown(titre)
-            col2.plotly_chart(circulaire("ind_officer"), use_container_width=True)
-            
-            
-    
+    # Afficher le texte fixe avec encadré
+    if var_choix == "Ecole : identité et organisation":
+        # Texte fixe à afficher
+        texte_fixe = """ Les écoles ciblées semblent de tous grades : primaire, collège, lycée. 
+        Pour autant les écoles dites publiques sont 15 fois plus visées que les écoles privées.
+        Enfin dans trois quarts des écoles ciblées il n'y avait pas de présence de force de protection au moment de l'attaque."""
+        st.markdown(f'<div style="{style_encadre}">{texte_fixe}</div>', unsafe_allow_html=True)
         
-        case "Typologie de l'attaque": # barplot ou histogramme ? ajouter boxplot
-            
-            texte_fixe = """Environ trois quarts des fusillades recensées ne sont pas meurtières. Ainsi plus de 90% des attaques engendrent moins de 5 victimes (blessés ou tués). 
-            Une grande proportion des fusillades sont préméditées et les armes utilisées sont majoritairement des armes à feu.
-                            Les armes utilisées sont pour la majorité déclarées, et appartiennent le plus souvent à l'agresseur ou à un proche de celui-ci.
-                            """
-            st.markdown(f'<div style="{style_encadre}">{texte_fixe}</div>', unsafe_allow_html=True)
+        col1, col2 = st.columns(2)
+        titre='**Noms des écoles concernées par les fusillades**'
+        col1.markdown(titre)
+        col1.image(graph_nuage_mots("school_name").to_array(), use_column_width=True)
         
-            col1, col2 = st.columns(2)
-            titre="**Proportions d'attaques meurtrières**"
-            col1.markdown(titre)
-            df['ind_killed'] = np.where(df['killed'] > 0, 'Meutrières', 'Non meurtrières')
-            col1.plotly_chart(circulaire("ind_killed"), use_container_width=True)
-            
-            titre = "**Répartition du nombre de victimes totales**"
-            col2.markdown(titre)
-            col2.altair_chart(histo("casualties", 400), use_container_width=True)
-            
-            col1, col2 = st.columns(2)
-
-            titre = "**Répartition du nombre de blessés**"
-            col1.markdown(titre)
-            col1.pyplot(violin("injured"), use_container_width=True)
-            
-            titre = "**Répartition du nombre de morts**"
-            col2.markdown(titre)
-            col2.pyplot(violin("killed"), use_container_width=True)
-            
-            titre="**Type de la fusillade**"
-            st.markdown(titre)
-            st.altair_chart(barplot_vert("shooting_type", 400), use_container_width=True)
-            
-            col1, col2 = st.columns(2)
-            
-            titre ="**Armes utilisées**"
-            col1.markdown(titre)
-            col1.image(graph_nuage_mots("weapon").to_array(), use_column_width=True)
-            
-            titre ="**Provenance des armes**"
-            col2.markdown(titre)
-            col2.image(graph_nuage_mots("weapon_source").to_array(), use_column_width=True)
-            
-        case "Temporalité":
-            
-            texte_fixe = """ Il semble y avoir une forte croissance du nombre d'attaques depuis 2016. 
-            Aucun jour ni aucune heure ne semble privilégié par les assaillants."""
-            st.markdown(f'<div style="{style_encadre}">{texte_fixe}</div>', unsafe_allow_html=True)
-            
-            col1, col2 = st.columns(2)
-            titre = "**Nombre de fusillades par année**"
-            col1.markdown(titre)
-            col1.altair_chart(barplot_vert("year", 400), use_container_width=True)
-            
-            titre = "**Nombre de fusillades par année scolaire**"
-            col2.markdown(titre)
-            col2.altair_chart(barplot_hori("school_year",1300), use_container_width=True)
-            
-            titre = "**Répartition des fusillades dans la semaine**"
-            col1.markdown(titre)
-            col1.plotly_chart(circulaire("day_of_week"), use_container_width=True)
-            
-            titre = "**Réparitition de l'horaire des fusillades**"
-            col1.markdown(titre)
-            col1.plotly_chart(circulaire("time"), use_container_width=True)
-            
-        case "Géographie":
-            
-            texte_fixe = """Il est observé une grande disparité du nombre de fusillades entre les États.
-            L'État de Californie est le plus touché avec 40 attaques en milieu scolaire, vient ensuite le Texas et la Caroline du Nord. 
-            En revanche le Wyoming ne semble pas avoir été touché en 25 ans.
-            Ainsi la ville de Los Angeles s'impose comme la ville la plus meurtrie par de telles attaques."""
-            st.markdown(f'<div style="{style_encadre}">{texte_fixe}</div>', unsafe_allow_html=True)
-            
-            titre = '**Nombre de fusillades par État**'
-            st.markdown(titre)
-            st.altair_chart(barplot_hori("state", 1200), use_container_width=True)
-            
-            col1, col2 = st.columns(2)
-            
-            titre ='**Comtés concernés par les fusillades**'
-            col1.markdown(titre)
-            col1.image(graph_nuage_mots("county").to_array(), use_column_width=True)
-            
-            titre = '**Villes concernées par les fusillades**'
-            col2.markdown(titre)
-            col2.image(graph_nuage_mots("city").to_array(), use_column_width=True)
-            
-        case "Identité des attaquants":
-            texte_fixe = """ Le profil type d'un assaillant d'un établissement américain est un homme, de 25 ans, étudiant dans l'établissement.
-            Dans la majorité des cas il est capturé vivant."""
-            st.markdown(f'<div style="{style_encadre}">{texte_fixe}</div>', unsafe_allow_html=True)
-            
-            col1, col2 = st.columns(2)
-            #age 
-            titre = '**Répartition âge des attaquants**'
-            col1.markdown(titre)
-            col1.altair_chart(histo("age_shooter1", 400), use_container_width=True)
+        titre="**Type d'écoles impliquées dans une fusillade**"
+        col2.markdown(titre)
+        col2.altair_chart(barplot_vert("school_type", 400), use_container_width=True)
+        
+        col1, col2 = st.columns(2)
                 
-            #Sexe
-            titre = "**Sexe de l'attaquant**"
-            df['ind_sexe_att'] = np.where(df['gender_shooter1'] == "m", 'Homme', 'Femme')
-            col2.markdown(titre)
-            col2.plotly_chart(circulaire("ind_sexe_att"), use_container_width=True)
+        titre = "**Nombre d'inscrits dans les écoles visées**"
+        col1.markdown(titre)
+        col1.altair_chart(histo("enrollment", 400), use_container_width=True) # changer en boxplot
+        
+        #lunch
+        df["lunch_prop"] = (df['lunch']/df["enrollment"])
+        titre= "**Proportion de boursiers au sein des établissements visés**"
+        col2.markdown(titre)
+        col2.altair_chart(histo("lunch_prop", 400), use_container_width=True) 
+        
+        col1, col2 = st.columns(2)
+        
+        #staffing
+        df["staffing_prop"] = (df['staffing']/df["enrollment"])
+        titre = "**Proportion de professeur par étudiant au sein des établissements visés**"
+        col1.markdown(titre)
+        col1.altair_chart(histo("staffing_prop", 400), use_container_width=True) 
+        
+        #ressource officer
+        titre="**Présence/ abscence d'une force de protection dans les étabilssements visés**"
+        df['ind_officer'] = np.where(df['resource_officer'] > 0, 'Présence', 'Absence')
+        col2.markdown(titre)
+        col2.plotly_chart(circulaire("ind_officer"), use_container_width=True)
+        
+    elif var_choix == "Typologie de l'attaque": # barplot ou histogramme ? ajouter boxplot
+        texte_fixe = """Environ trois quarts des fusillades recensées ne sont pas meurtières. Ainsi plus de 90% des attaques engendrent moins de 5 victimes (blessés ou tués). 
+        Une grande proportion des fusillades sont préméditées et les armes utilisées sont majoritairement des armes à feu.
+                        Les armes utilisées sont pour la majorité déclarées, et appartiennent le plus souvent à l'agresseur ou à un proche de celui-ci.
+                        """
+        st.markdown(f'<div style="{style_encadre}">{texte_fixe}</div>', unsafe_allow_html=True)
+    
+        col1, col2 = st.columns(2)
+        titre="**Proportions d'attaques meurtrières**"
+        col1.markdown(titre)
+        df['ind_killed'] = np.where(df['killed'] > 0, 'Meutrières', 'Non meurtrières')
+        col1.plotly_chart(circulaire("ind_killed"), use_container_width=True)
+        
+        titre = "**Répartition du nombre de victimes totales**"
+        col2.markdown(titre)
+        col2.altair_chart(histo("casualties", 400), use_container_width=True)
+        
+        col1, col2 = st.columns(2)
+        
+        titre = "**Répartition du nombre de blessés**"
+        col1.markdown(titre)
+        col1.pyplot(violin("injured"), use_container_width=True)
+        
+        titre = "**Répartition du nombre de morts**"
+        col2.markdown(titre)
+        col2.pyplot(violin("killed"), use_container_width=True)
+        
+        titre="**Type de la fusillade**"
+        st.markdown(titre)
+        st.altair_chart(barplot_vert("shooting_type", 400), use_container_width=True)
+        
+        col1, col2 = st.columns(2)
+        
+        titre ="**Armes utilisées**"
+        col1.markdown(titre)
+        col1.image(graph_nuage_mots("weapon").to_array(), use_column_width=True)
+        
+        titre ="**Provenance des armes**"
+        col2.markdown(titre)
+        col2.image(graph_nuage_mots("weapon_source").to_array(), use_column_width=True)
+        
+    elif var_choix == "Temporalité":
+        
+        texte_fixe = """ Il semble y avoir une forte croissance du nombre d'attaques depuis 2016. 
+        Aucun jour ni aucune heure ne semble privilégié par les assaillants."""
+        st.markdown(f'<div style="{style_encadre}">{texte_fixe}</div>', unsafe_allow_html=True)
+        
+        col1, col2 = st.columns(2)
+        titre = "**Nombre de fusillades par année**"
+        col1.markdown(titre)
+        col1.altair_chart(barplot_vert("year", 400),use_container_width=True)
+        
+        titre = "**Nombre de fusillades par année scolaire**"
+        col2.markdown(titre)
+        col2.altair_chart(barplot_hori("school_year",1300), use_container_width=True)
+        
+        titre = "**Répartition des fusillades dans la semaine**"
+        col1.markdown(titre)
+        col1.plotly_chart(circulaire("day_of_week"), use_container_width=True)
+        
+        titre = "**Réparitition de l'horaire des fusillades**"
+        col1.markdown(titre)
+        col1.plotly_chart(circulaire("time"), use_container_width=True)
+        
+    elif var_choix == "Géographie":
+        
+        texte_fixe = """Il est observé une grande disparité du nombre de fusillades entre les États.
+        L'État de Californie est le plus touché avec 40 attaques en milieu scolaire, vient ensuite le Texas et la Caroline du Nord. 
+        En revanche le Wyoming ne semble pas avoir été touché en 25 ans.
+        Ainsi la ville de Los Angeles s'impose comme la ville la plus meurtrie par de telles attaques."""
+        st.markdown(f'<div style="{style_encadre}">{texte_fixe}</div>', unsafe_allow_html=True)
+        
+        titre = '**Nombre de fusillades par État**'
+        st.markdown(titre)
+        st.altair_chart(barplot_hori("state", 1200), use_container_width=True)
+        
+        col1, col2 = st.columns(2)
+        
+        titre ='**Comtés concernés par les fusillades**'
+        col1.markdown(titre)
+        col1.image(graph_nuage_mots("county").to_array(), use_column_width=True)
+        
+        titre = '**Villes concernées par les fusillades**'
+        col2.markdown(titre)
+        col2.image(graph_nuage_mots("city").to_array(), use_column_width=True)
+        
+    elif var_choix == "Identité des attaquants":
+        texte_fixe = """ Le profil type d'un assaillant d'un établissement américain est un homme, de 25 ans, étudiant dans l'établissement.
+        Dans la majorité des cas il est capturé vivant."""
+        st.markdown(f'<div style="{style_encadre}">{texte_fixe}</div>', unsafe_allow_html=True)
+        
+        col1, col2 = st.columns(2)
+        #age 
+        titre = '**Répartition âge des attaquants**'
+        col1.markdown(titre)
+        col1.altair_chart(histo("age_shooter1", 400), use_container_width=True)
             
-            c2 = st.container()
-            #Mortalité
-            titre = "**Etat de l'attaquant (après attaque)**"
-            df['ind_mort_attaquant'] = np.where(df['shooter_deceased1'] == 1, 'Décès', 'Vivant')
-            col1.markdown(titre)
-            col1.plotly_chart(circulaire("ind_mort_attaquant"), use_container_width=True)
-            
-            #relationship
-            titre = "**Relation de l'attaquant avec l'établissement**"
-            col2.markdown(titre)
-            col2.image(graph_nuage_mots("shooter_relationship1").to_array(), use_column_width=True)
+        #Sexe
+        titre = "**Sexe de l'attaquant**"
+        df['ind_sexe_att'] = np.where(df['gender_shooter1'] == "m", 'Homme', 'Femme')
+        col2.markdown(titre)
+        col2.plotly_chart(circulaire("ind_sexe_att"), use_container_width=True)
+        
+        c2 = st.container()
+        #Mortalité
+        titre = "**Etat de l'attaquant (après attaque)**"
+        df['ind_mort_attaquant'] = np.where(df['shooter_deceased1'] == 1, 'Décès', 'Vivant')
+        col1.markdown(titre)
+        col1.plotly_chart(circulaire("ind_mort_attaquant"), use_container_width=True)
+        
+        #relationship
+        titre = "**Relation de l'attaquant avec l'établissement**"
+        col2.markdown(titre)
+        col2.image(graph_nuage_mots("shooter_relationship1").to_array(), use_column_width=True)
 
 
 #==================================================================================
