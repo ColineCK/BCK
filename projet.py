@@ -785,16 +785,16 @@ def ML_section():
 	st.write("L'étude de performance est dans un premier temps réalisée en prenant en compte toutes les variables explicatives d'intérêt.")
 	cible_choix= st.selectbox('Sélectionnez une variable cible :', ["Nombre de victimes", "Nombre de blessés", "Nombre de morts"])
 	cible =""
-	match cible_choix:
-		case "Nombre de victimes":
-			ML_Best_models("casualties", dfML)
-			cible = "casualties"
-		case "Nombre de blessés":
-			ML_Best_models("injured", dfML)
-			cible = "injured"
-		case "Nombre de morts":
-			ML_Best_models("killed", dfML)
-			cible ="killed"
+	
+	if cible_choix == "Nombre de victimes":
+	    ML_Best_models("casualties", dfML)
+	    cible = "casualties"
+	elif cible_choix == "Nombre de blessés":
+	    ML_Best_models("injured", dfML)
+	    cible = "injured"
+	elif cible_choix == "Nombre de morts":
+	    ML_Best_models("killed", dfML)
+	    cible = "killed"
 			
 	st.subheader("Focus sur le SVM")
 	st.write("Par la suite, il a été choisi de se concentrer sur un modèle Support Vector Machine (SVM), réduit à deux variables explicatives pour des raisons de visualisation.")
