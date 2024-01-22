@@ -32,12 +32,12 @@ import plotly.graph_objects as go
 
 
 #Données
-nom_fichier = "/home/coline/Documents/Etudes/ISUP/Master2/Semestre1/Visualisation de données/BCK/school-shootings-data.csv"
+nom_fichier = "school-shootings-data.csv"
 
 df =pd.read_csv(nom_fichier)
 pd.set_option('display.max_rows', None) 
 
-USA_map = "/home/coline/Documents/Etudes/ISUP/Master2/Semestre1/Visualisation de données/BCK/US_States3.json"
+USA_map = "US_States3.json"
 
 #=================================================================================
 #                           Retraitement des données 
