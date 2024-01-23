@@ -12,4 +12,6 @@ Folium>=0.13,<0.15
 streamlit_folium==0.18.0
 lazypredict==0.2.12
 plotly==5.18.0
+streamlit_multipage>=0.2.0,<0.3.0
+
 
