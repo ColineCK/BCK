@@ -8,10 +8,8 @@ plotly.express==0.4.1
 wordcloud==1.9.3
 seaborn==0.13.1
 Pillow==10.2.0
-pandas.api.types==
 Folium==0.1.5
 streamlit_folium==0.18.0
-streamlit_folium==
 sklearn.model==0.0.6
 lazypredict==0.2.12
 plotly==5.18.0
