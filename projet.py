@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # Utilise le backend 'Agg' au lieu du backend interactif
 import matplotlib.pyplot as plt
 import altair as alt
 import plotly.express as px
