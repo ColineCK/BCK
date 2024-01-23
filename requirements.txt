@@ -13,4 +13,6 @@ streamlit_folium==0.18.0
 lazypredict==0.2.12
 plotly==5.18.0
 streamlit_multipage==0.0.18
+scipy==1.7.3
+
 
