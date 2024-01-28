@@ -419,12 +419,12 @@ def section_Univariee():
         #col2.image(graph_nuage_mots("weapon_source").to_array(), use_column_width=True)
 
 	titre = "**Armes utilisées**"
-        col1.markdown(titre)
-        graph_nuage_mots("weapon", titre)
-
-        titre = "**Provenance des armes**"
-        col2.markdown(titre)
-        graph_nuage_mots("weapon_source", titre)
+	col1.markdown(titre)
+	graph_nuage_mots("weapon", titre)
+	
+	titre = "**Provenance des armes**"
+	col2.markdown(titre)
+	graph_nuage_mots("weapon_source", titre)
         
     elif var_choix == "Temporalité":
         
