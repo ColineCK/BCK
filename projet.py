@@ -407,9 +407,9 @@ def section_Univariee():
         titre="**Type de la fusillade**"
         st.markdown(titre)
         st.altair_chart(barplot_vert("shooting_type", 400), use_container_width=True)
-        
-        col1, col2 = st.columns(2)
-        
+	
+	col1, col2 = st.columns(2)
+	
 	titre ="**Armes utilisées**"
 	col1.markdown(titre)
         col1.image(graph_nuage_mots("weapon").to_array(), use_column_width=True)
