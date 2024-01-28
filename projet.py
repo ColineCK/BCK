@@ -304,7 +304,7 @@ def graph_nuage_mots(variable):
                 stopwords = mots_exclus,
                 max_words=30,
                 colormap="Reds",
-		font_path='arial.ttf',
+		font_path=None,
                 min_font_size = 10).generate(comment_words)
 
    # Affichez le nuage de mots avec imshow
