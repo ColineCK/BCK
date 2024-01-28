@@ -308,13 +308,13 @@ def graph_nuage_mots(variable):
                 min_font_size = 10).generate(comment_words)
 
    # Affichez le nuage de mots avec imshow
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis("off")
-    plt.title(title)
+    #plt.imshow(wordcloud, interpolation='bilinear')
+    #plt.axis("off")
+    #plt.title(title)
 
     # Affichez la visualisation dans Streamlit
-    st.pyplot()
-    #return(wordcloud)
+    #st.pyplot()
+    return(wordcloud)
 
 
 
@@ -410,21 +410,13 @@ def section_Univariee():
         
         col1, col2 = st.columns(2)
         
-	#titre ="**Armes utilisées**"
-	#col1.markdown(titre)
-        #col1.image(graph_nuage_mots("weapon").to_array(), use_column_width=True)
-        
-        #titre ="**Provenance des armes**"
-        #col2.markdown(titre)
-        #col2.image(graph_nuage_mots("weapon_source").to_array(), use_column_width=True)
-
-	titre = "**Armes utilisées**"
+	titre ="**Armes utilisées**"
 	col1.markdown(titre)
-	graph_nuage_mots("weapon", titre)
-	
-	titre = "**Provenance des armes**"
-	col2.markdown(titre)
-	graph_nuage_mots("weapon_source", titre)
+        col1.image(graph_nuage_mots("weapon").to_array(), use_column_width=True)
+        
+        titre ="**Provenance des armes**"
+        col2.markdown(titre)
+        col2.image(graph_nuage_mots("weapon_source").to_array(), use_column_width=True)
         
     elif var_choix == "Temporalité":
         
