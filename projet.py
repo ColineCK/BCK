@@ -304,11 +304,13 @@ def graph_nuage_mots(variable):
                 stopwords = mots_exclus,
                 max_words=30,
                 colormap="Reds",
-		font_path="arial.ttf",
                 min_font_size = 10).generate(comment_words)
     
  
     return(wordcloud)
+
+
+
 
 
 
@@ -403,7 +405,7 @@ def section_Univariee():
         
         titre ="**Armes utilisées**"
         col1.markdown(titre)
-        col1.image(graph_nuage_mots("weapon").to_array(), use_column_width=True)
+        col1.imshow(graph_nuage_mots("weapon").to_array())
         
         titre ="**Provenance des armes**"
         col2.markdown(titre)
