@@ -32,11 +32,6 @@ from lazypredict.Supervised import LazyClassifier
 import plotly.graph_objects as go
 from streamlit_option_menu import option_menu
 
-from matplotlib.font_manager import findSystemFonts
-
-fonts = findSystemFonts()
-print(fonts)
-
 
 #Données
 nom_fichier = "school-shootings-data.csv"
