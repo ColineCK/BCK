@@ -304,6 +304,7 @@ def graph_nuage_mots(variable):
                 stopwords = mots_exclus,
                 max_words=30,
                 colormap="Reds",
+		font_path='arial.ttf',
                 min_font_size = 10).generate(comment_words)
     
  
