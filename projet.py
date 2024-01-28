@@ -30,6 +30,7 @@ from sklearn.model_selection import GridSearchCV, StratifiedShuffleSplit
 from sklearn.svm import SVC
 from lazypredict.Supervised import LazyClassifier
 import plotly.graph_objects as go
+from streamlit_option_menu import option_menu
 
 
 #Données
@@ -831,9 +832,6 @@ def ML_section():
 #                                   Application
 #=========================================================================================
  
-
-
-from streamlit_option_menu import option_menu
 
 with st.sidebar:
     selected = option_menu("Sommaire", ["Introduction", 'Présentation des données', 'Analyse univariée', 'Analyse multivariée', 'Machine learning'], default_index=1)
