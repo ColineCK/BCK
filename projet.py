@@ -570,8 +570,6 @@ def section_bivariee():
 
 
 
-	
-nom_fichier = "/home/coline/Documents/Etudes/ISUP/Master2/Semestre1/Visualisation de données/BCK/school-shootings-data.csv"
 
 dfML = pd.read_csv(nom_fichier)
 
