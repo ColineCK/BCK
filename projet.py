@@ -410,8 +410,8 @@ def section_Univariee():
         
         col1, col2 = st.columns(2)
         
-        #titre ="**Armes utilisées**"
-        #col1.markdown(titre)
+	#titre ="**Armes utilisées**"
+	#col1.markdown(titre)
         #col1.image(graph_nuage_mots("weapon").to_array(), use_column_width=True)
         
         #titre ="**Provenance des armes**"
